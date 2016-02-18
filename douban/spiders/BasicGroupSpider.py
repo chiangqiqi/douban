@@ -1,7 +1,7 @@
-from scrapy.spider import BaseSpider
+from scrapy.spiders import Spider
 from scrapy.selector import HtmlXPathSelector
-from scrapy.contrib.spiders import CrawlSpider, Rule
-from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
+from scrapy.spiders import CrawlSpider, Rule
+from scrapy.linkextractors import LinkExtractor
 from scrapy.selector import HtmlXPathSelector
 from scrapy.item import Item
 from douban.items import DoubanItem
@@ -22,9 +22,9 @@ class GroupSpider(CrawlSpider):
     ]
  
     rules = [
-        Rule(SgmlLinkExtractor(allow=('/group/[^/]+/$', )), callback='parse_group_home_page', process_request='add_cookie'),
-    #   Rule(SgmlLinkExtractor(allow=('/group/[^/]+/discussion\?start\=(\d{1,4})$', )), callback='parse_group_topic_list', process_request='add_cookie'),
-        Rule(SgmlLinkExtractor(allow=('/group/explore\?tag', )), follow=True, process_request='add_cookie'),
+        Rule(LinkExtractor(allow=('/group/[^/]+/$', )), callback='parse_group_home_page', process_request='add_cookie'),
+    #   Rule(LinkExtractor(allow=('/group/[^/]+/discussion\?start\=(\d{1,4})$', )), callback='parse_group_topic_list', process_request='add_cookie'),
+        Rule(LinkExtractor(allow=('/group/explore\?tag', )), follow=True, process_request='add_cookie'),
     ]
  
     def __get_id_from_group_url(self, url):
